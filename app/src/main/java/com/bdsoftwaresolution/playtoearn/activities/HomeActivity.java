@@ -11,7 +11,7 @@ import com.bdsoftwaresolution.playtoearn.R;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private LinearLayout taskoneLinear, tasktwoLinerar,taskthreeLinear;
+    private LinearLayout taskoneLinear, tasktwoLinerar,taskthreeLinear,withdraw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,13 @@ public class HomeActivity extends AppCompatActivity {
         taskoneLinear = findViewById(R.id.taskOneID);
         tasktwoLinerar = findViewById(R.id.taskTwoID);
         taskthreeLinear = findViewById(R.id.taskThreeID);
+        withdraw = findViewById(R.id.taskFourID);
+        withdraw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, WithdrawActivity.class));
+            }
+        });
         taskthreeLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
