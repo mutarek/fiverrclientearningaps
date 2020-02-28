@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bdsoftwaresolution.playtoearn">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activities.WithdrawActivity"></activity>
+        <activity android:name=".activities.DaimondActivity" />
+        <activity android:name=".activities.HanifActivity" />
+        <activity android:name=".activities.WebLoadActivity" />
+        <activity android:name=".activities.SpinActivity" />
+        <activity android:name=".activities.HomeActivity" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:theme="@style/NoBar" />
+        <activity
+            android:name=".activities.SignUpActivity"
+            android:theme="@style/NoBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+    </application>
+
+</manifest>
