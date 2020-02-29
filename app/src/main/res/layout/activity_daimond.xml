@@ -37,6 +37,7 @@
                 android:textAlignment="center" />
 
             <Button
+                android:onClick="matchthetext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

@@ -1,11 +1,13 @@
 package com.bdsoftwaresolution.playtoearn.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -18,7 +20,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bdsoftwaresolution.playtoearn.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class SpinActivity extends AppCompatActivity {
@@ -31,8 +42,11 @@ public class SpinActivity extends AppCompatActivity {
     public static final float FACTOR = 15f;
     TextView textView;
     int oldcoin;
-    String currentuser;
     String current_score;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    String cuser = firebaseAuth.getCurrentUser().getUid();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference collectionReference = db.collection("Users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +55,6 @@ public class SpinActivity extends AppCompatActivity {
         imageView_wheel = findViewById(R.id.wheel);
         imageButton_spin = findViewById(R.id.button);
         textView = findViewById(R.id.textview);
-       /* firebaseAuth = FirebaseAuth.getInstance();
-        currentuser = firebaseAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
-        prevoiusref = FirebaseDatabase.getInstance().getReference().child("Users");*/
         loadoldcoin();
         getSupportActionBar().hide();
         current_score = currentNumber(360 - (degree % 360));
@@ -84,7 +94,18 @@ public class SpinActivity extends AppCompatActivity {
                         textView.setText(currentNumber(360 - (degree % 360)));
                         imageButton_spin.setVisibility(View.GONE);
                         int n = oldcoin + score;
-                        //databaseReference.child(currentuser).child("Point").setValue(n);
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("Coin", n);
+                        db.collection("Users").document(cuser).update(
+                                "Coin", oldcoin+score, "Last_Task_Time",11)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(SpinActivity.this, "coin added", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
                         new CountDownTimer(20000, 1000) {
 
                             public void onTick(long millisUntilFinished) {
@@ -118,17 +139,21 @@ public class SpinActivity extends AppCompatActivity {
     }
 
     private void loadoldcoin() {
-        /*prevoiusref.child(currentuser).addValueEventListener(new ValueEventListener() {
+        collectionReference.document(cuser).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                oldcoin = Integer.valueOf(dataSnapshot.child("Point").getValue().toString());
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        oldcoin =Integer.parseInt(String.valueOf(document.get("Coin")));
+                    } else {
+                        Toast.makeText(SpinActivity.this, "No such document", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(SpinActivity.this, "get failed with", Toast.LENGTH_SHORT).show();
+                }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
+        });
     }
 
 
@@ -224,12 +249,8 @@ public class SpinActivity extends AppCompatActivity {
         Button dialogButton = dialog.findViewById(R.id.cool_id);
         TextView textView = dialog.findViewById(R.id.dialog_score_id);
         String a = currentNumber(360 - (degree % 360));
-
         textView.setText(a + " " + "Points");
-
-
         // if button is clicked, close the custom dialog
-
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

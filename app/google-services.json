@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "316954734453",
+    "firebase_url": "https://bdt-bot-170f1.firebaseio.com",
+    "project_id": "bdt-bot-170f1",
+    "storage_bucket": "bdt-bot-170f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316954734453:android:952d8ed06c5a193e336d3c",
+        "android_client_info": {
+          "package_name": "com.bdsoftwaresolution.playtoearn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316954734453-osa7pdrd6hsrileviq8c792tula3a2mb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcS0oD-0VQIfQYkDoRRTv7YCoTINBYZeA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316954734453-osa7pdrd6hsrileviq8c792tula3a2mb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

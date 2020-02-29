@@ -74,21 +74,21 @@
                         android:id="@+id/radio_bkash"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="Bkash"
+                        android:text="Paypal"
                         android:textSize="20dp" />
 
                     <RadioButton
                         android:id="@+id/radio_rocket"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="Rocket"
+                        android:text="Payoner"
                         android:textSize="20dp" />
 
                     <RadioButton
                         android:id="@+id/radio_nagad"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nagad"
+                        android:text="Bank"
                         android:textSize="20dp" />
 
 
@@ -96,6 +96,7 @@
 
 
                 <Button
+                    android:onClick="withdrawBTN"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
